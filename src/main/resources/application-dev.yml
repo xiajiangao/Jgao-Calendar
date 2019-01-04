@@ -1,0 +1,24 @@
+server:
+  port: 8888
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    druid:
+        initial-size: 5
+        max-active: 20
+        min-idle: 5
+        max-wait: 30000
+        stat-view-servlet:
+            enabled: true
+            url-pattern: /druid/*
+            reset-enable: true
+            login-username: admin
+            login-password: admin
+            allow: 127.0.0.1
+
+    #---primary---
+    primary:
+        url: jdbc:mysql://jgao.top:3306/Jgao-Calendar?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+        username: root
+        password: root

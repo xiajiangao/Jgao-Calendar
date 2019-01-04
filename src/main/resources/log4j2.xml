@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <properties>
+        <!-- 文件输出格式 -->
+        <!--配色板："%black", "%red", "%green","%yellow","%blue", "%magenta","%cyan", "%white", "%gray","%boldRed","%boldGreen", "%boldYellow", "%boldBlue", "%boldMagenta","%boldCyan", "%boldWhite","%highlight"
+                例:%red(XX),则 XX 这两个字为红色
+                其它 %p 表示level,%t表示线程名-->
+        <!--<property name="PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread]  %-5level %logger : %msg%n</property>-->
+        <property name="CONSOLE_PATTERN">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint}-%clr{[%X{requestId}]}{highlight} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n%xwEx
+        </property>
+        <property name="FILE_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${sys:PID} --- [%15.15t]-[%X{requestId}] %-40.40c{1.} : %m%n%xwEx
+        </property>
+        <!--颜色设置-->
+        <!--%highlight{%d{yyyy.MM.dd 'at' HH:mm:ss z} %-5level %class{36} %M() @%L - %msg%n}
+        {FATAL=Bright Red, ERROR=Bright Magenta, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White}-->
+    </properties>
+
+    <appenders>
+        <Console name="console" target="system_out">
+            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
+        </Console>
+        <RollingFile name="file" fileName="logs/out.log"
+                     filePattern="logs/%d{yyyy-MM-dd}/%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了100 -->
+            <DefaultRolloverStrategy max="500"/>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <root level="info">
+            <appenderref ref="file"/>
+            <!--<appenderref ref="console"/>-->
+        </root>
+    </loggers>
+
+</configuration> 
