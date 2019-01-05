@@ -24,7 +24,7 @@ public class MyBatisMapperScannerConfig {
         logger.info("设置primaryMapperScannerConfigurer");
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("primarySqlSessionFactory");
-        mapperScannerConfigurer.setBasePackage("com.example.demo.common.persistence.mapper.primary");
+        mapperScannerConfigurer.setBasePackage("top.jgao.persistence.mapper");
         Properties properties = new Properties();
         properties.setProperty("mappers", "MyMapper");
         properties.setProperty("notEmpty", "false");
