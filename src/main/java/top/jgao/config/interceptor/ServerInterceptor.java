@@ -1,12 +1,10 @@
 package top.jgao.config.interceptor;
 
-import top.jgao.utils.RequestUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import top.jgao.utils.RequestUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class ServerInterceptor implements HandlerInterceptor {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
     public static final String REQUEST_ID_KEY = "requestId";
     public static ThreadLocal<String> requestIdThreadLocal = new ThreadLocal<String>();
     public static ThreadLocal<Long> timeThreadLocal = new ThreadLocal<Long>();
@@ -26,7 +23,7 @@ public class ServerInterceptor implements HandlerInterceptor {
         String uri = request.getRequestURI();
         String requestId = getRequestId(request);
         MDC.put(REQUEST_ID_KEY, requestId);
-        logger.info("ip地址{},请求方式{},访问地址{},requestId= {}", ip, request.getMethod(), uri, requestId);
+        log.info("ip地址{},请求方式{},访问地址{},requestId= {}", ip, request.getMethod(), uri, requestId);
         timeThreadLocal.set(System.currentTimeMillis());
         return true;
     }
@@ -36,7 +33,7 @@ public class ServerInterceptor implements HandlerInterceptor {
         long endTime = System.currentTimeMillis();
         long startTime = timeThreadLocal.get();
         long time = endTime - startTime;
-        logger.warn("method to detect timeout for {}, and the execution time is {} ms", request.getRequestURI(), time);
+        log.warn("method to detect timeout for {}, and the execution time is {} ms", request.getRequestURI(), time);
         if (time > 200) {
         }
     }

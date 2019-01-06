@@ -1,8 +1,9 @@
 package top.jgao.config.db;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tk.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -15,13 +16,13 @@ import java.util.Properties;
  */
 @Configuration
 //TODO 注意，由于MapperScannerConfigurer执行的比较早，所以必须有下面的注解
-@AutoConfigureBefore({PrimaryDBConfig.class})
+@AutoConfigureAfter({PrimaryDBConfig.class})
+@Slf4j
 public class MyBatisMapperScannerConfig {
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Bean
     public MapperScannerConfigurer primaryMapperScannerConfigurer() {
-        logger.info("设置primaryMapperScannerConfigurer");
+        log.info("设置primaryMapperScannerConfigurer");
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("primarySqlSessionFactory");
         mapperScannerConfigurer.setBasePackage("top.jgao.persistence.mapper");

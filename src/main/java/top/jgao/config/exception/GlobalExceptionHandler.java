@@ -1,10 +1,10 @@
 package top.jgao.config.exception;
 
-import top.jgao.basic.Result;
-import top.jgao.basic.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import top.jgao.basic.Result;
+import top.jgao.basic.ResultCode;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

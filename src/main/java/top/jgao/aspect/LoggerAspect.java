@@ -1,16 +1,15 @@
 package top.jgao.aspect;
 
 import com.alibaba.fastjson.JSON;
-import top.jgao.annotation.MyLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import top.jgao.annotation.MyLogger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
@@ -32,9 +31,8 @@ import java.util.regex.Pattern;
  */
 @Aspect
 @Component
+@Slf4j
 public class LoggerAspect {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Pointcut("@annotation(MyLogger)")
     public void monitorLog() {
@@ -52,7 +50,7 @@ public class LoggerAspect {
         String args = getArgs(joinPoint, signature, method, controller);// 参数值
         MyLogger myLogger = method.getAnnotation(MyLogger.class);// 获取注解
         String message = myLogger.value();// 注解上的值
-        logger.info(controllerName + "-" + methodName + message + "参数" + args);
+        log.info(controllerName + "-" + methodName + message + "参数" + args);
         try {
             obj = joinPoint.proceed();
             if (myLogger.isInsertTable()) {
@@ -66,15 +64,15 @@ public class LoggerAspect {
                 }
             }
             long endTime = System.currentTimeMillis();
-            logger.info(controllerName + "-" + methodName + message + "成功,耗时time={" + (endTime - startTime)
+            log.info(controllerName + "-" + methodName + message + "成功,耗时time={" + (endTime - startTime)
                     + "毫秒},返回值result=" + JSON.toJSONString(obj));
         } catch (RuntimeException e) {
-            logger.info(controllerName + "-" + methodName + message + "失败,错误信息error={" + e.getMessage() + "}");
+            log.info(controllerName + "-" + methodName + message + "失败,错误信息error={" + e.getMessage() + "}");
             System.err.println("异常存表......");
             insertErrorLog(methodName, controllerName, args, message, e);
             throw e;
         } catch (Throwable throwable) {
-            logger.error("日志切面抓取到Throwable，throwable={}", throwable.getMessage());
+            log.error("日志切面抓取到Throwable，throwable={}", throwable.getMessage());
             throwable.printStackTrace();
         }
         return obj;
@@ -82,7 +80,7 @@ public class LoggerAspect {
 
     @Async
     public void insertErrorLog(String methodName, String controllerName, String args, String message, RuntimeException e) {
-        logger.info("插入错误日志表");
+        log.info("插入错误日志表");
     }
 
 
@@ -128,7 +126,7 @@ public class LoggerAspect {
                 json = m.replaceAll("");
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return json;
     }
