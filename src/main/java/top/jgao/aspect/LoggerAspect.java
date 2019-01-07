@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class LoggerAspect {
 
-    @Pointcut("@annotation(MyLogger)")
+    @Pointcut("@annotation(top.jgao.annotation.MyLogger)")
     public void monitorLog() {
     }
 
