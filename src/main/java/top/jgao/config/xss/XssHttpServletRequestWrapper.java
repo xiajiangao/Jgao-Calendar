@@ -47,7 +47,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         return arr;
     }
 
-
     /**
      * 覆盖getHeader方法，将参数名和参数值都做xss过滤。<br/>
      * 如果需要获得原始的值，则通过super.getHeaders(name)来获取<br/>
@@ -81,7 +80,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         if (req instanceof XssHttpServletRequestWrapper) {
             return ((XssHttpServletRequestWrapper) req).getOrgRequest();
         }
-
         return req;
     }
 }

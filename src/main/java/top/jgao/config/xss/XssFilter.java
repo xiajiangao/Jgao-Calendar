@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 @Slf4j
 public class XssFilter implements Filter {
-    
+
     /**
      * 是否过滤富文本内容
      */
@@ -28,24 +28,20 @@ public class XssFilter implements Filter {
         if (log.isDebugEnabled()) {
             log.debug("xss filter is open");
         }
-
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         if (handleExcludeURL(req, resp)) {
             filterChain.doFilter(request, response);
             return;
         }
-
         XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request, IS_INCLUDE_RICH_TEXT);
         filterChain.doFilter(xssRequest, response);
     }
 
     private boolean handleExcludeURL(HttpServletRequest request, HttpServletResponse response) {
-
         if (excludes == null || excludes.isEmpty()) {
             return false;
         }
-
         String url = request.getServletPath();
         for (String pattern : excludes) {
             Pattern p = Pattern.compile("^" + pattern);
@@ -54,7 +50,6 @@ public class XssFilter implements Filter {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -67,7 +62,6 @@ public class XssFilter implements Filter {
         if (StringUtils.isNotBlank(isIncludeRichText)) {
             IS_INCLUDE_RICH_TEXT = BooleanUtils.toBoolean(isIncludeRichText);
         }
-
         String temp = filterConfig.getInitParameter("excludes");
         if (temp != null) {
             String[] url = temp.split(",");

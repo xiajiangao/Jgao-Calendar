@@ -56,11 +56,11 @@ public class LoggerAspect {
             if (myLogger.isInsertTable()) {
                 // 插入表
                 if ("ADD".equals(String.valueOf(myLogger.type()))) {
-                    System.err.println("新增存表......");
+                    //新增存表
                 } else if ("UPDATE".equals(String.valueOf(myLogger.type()))) {
-                    System.err.println("更新存表......");
+                    //更新存表
                 } else if ("DELETE".equals(String.valueOf(myLogger.type()))) {
-                    System.err.println("删除存表......");
+                    //删除存表
                 }
             }
             long endTime = System.currentTimeMillis();
@@ -68,7 +68,6 @@ public class LoggerAspect {
                     + "毫秒},返回值result=" + JSON.toJSONString(obj));
         } catch (RuntimeException e) {
             log.info(controllerName + "-" + methodName + message + "失败,错误信息error={" + e.getMessage() + "}");
-            System.err.println("异常存表......");
             insertErrorLog(methodName, controllerName, args, message, e);
             throw e;
         } catch (Throwable throwable) {

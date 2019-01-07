@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import top.jgao.basic.Result;
 import top.jgao.basic.ResultCode;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
@@ -32,6 +33,12 @@ public class GlobalExceptionHandler {
         return Result.result(ResultCode.RESULT__ERROR_1, "空指针异常");
     }
 
+    @ExceptionHandler(ServletException.class)
+    public Object servletException(ServletException exception, HttpServletRequest request) {
+        recording(request, exception);
+        return Result.result(ResultCode.RESULT__ERROR_1, exception.getMessage());
+    }
+
     @ExceptionHandler(Throwable.class)
     public Object handleException(HttpServletRequest request, HttpServletResponse response, Throwable exception) {
         recording(request, exception);
@@ -41,6 +48,7 @@ public class GlobalExceptionHandler {
     private void recording(HttpServletRequest request, Throwable exception) {
         String uri = request.getRequestURI();
         String addr = request.getRemoteAddr();
-        log.error("IP地址:{},访问URI={},错误ERROR={}", addr, uri, exception);
+        log.error("IP地址:{},访问URI={},ERROR={}", addr, uri, exception);
+        exception.printStackTrace();
     }
 }

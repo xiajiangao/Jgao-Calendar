@@ -1,7 +1,5 @@
 package top.jgao.basic;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @SuppressWarnings("all")
 public class Result {
 
@@ -42,16 +40,6 @@ public class Result {
 //        }
 //        return result(resultCode, sb.substring(0, sb.length() - 1));
 //    }
-
-    @JsonIgnore
-    public boolean isError() {
-        return !isSuccess();
-    }
-
-    @JsonIgnore
-    public boolean isSuccess() {
-        return ResultCode.RESULT_SUCCESS.equals(resultCode);
-    }
 
     public String getRequestId() {
         return requestId;

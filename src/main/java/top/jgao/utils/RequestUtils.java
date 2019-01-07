@@ -17,9 +17,6 @@ public class RequestUtils {
 
     /**
      * 获取客户端IP地址，此方法用在proxy环境中
-     *
-     * @param req
-     * @return
      */
     public static String getRemoteAddr(HttpServletRequest req) {
         String ip = req.getHeader("X-Forwarded-For");
@@ -47,9 +44,6 @@ public class RequestUtils {
 
     /**
      * 判断是否为搜索引擎
-     *
-     * @param req
-     * @return
      */
     public static boolean isRobot(HttpServletRequest req) {
         String ua = req.getHeader("user-agent");
@@ -75,8 +69,6 @@ public class RequestUtils {
 
     /**
      * 获取COOKIE
-     *
-     * @param name
      */
     public static Cookie getCookie(HttpServletRequest request, String name) {
         Cookie[] cookies = request.getCookies();
@@ -90,8 +82,6 @@ public class RequestUtils {
 
     /**
      * 获取COOKIE
-     *
-     * @param name
      */
     public static String getCookieValue(HttpServletRequest request, String name) {
         Cookie[] cookies = request.getCookies();
@@ -105,10 +95,6 @@ public class RequestUtils {
 
     /**
      * 设置COOKIE
-     *
-     * @param name
-     * @param value
-     * @param maxAge
      */
     public static void setCookie(HttpServletRequest request, HttpServletResponse response, String name,
                                  String value, int maxAge) {
@@ -117,10 +103,6 @@ public class RequestUtils {
 
     /**
      * 设置COOKIE
-     *
-     * @param name
-     * @param value
-     * @param maxAge
      */
     public static void setCookie(HttpServletRequest request, HttpServletResponse response, String name,
                                  String value, int maxAge, boolean all_sub_domain) {
@@ -145,9 +127,6 @@ public class RequestUtils {
     /**
      * 获取用户访问URL中的根域名
      * 例如: www.dlog.cn -> dlog.cn
-     *
-     * @param req
-     * @return
      */
     public static String getDomainOfServerName(String host) {
         if (isIPAddr(host))
@@ -170,9 +149,6 @@ public class RequestUtils {
 
     /**
      * 判断字符串是否是一个IP地址
-     *
-     * @param addr
-     * @return
      */
     public static boolean isIPAddr(String addr) {
         if (StringUtils.isEmpty(addr))
@@ -204,10 +180,6 @@ public class RequestUtils {
 
     /**
      * 获取HTTP端口
-     *
-     * @param req
-     * @return
-     * @throws MalformedURLException
      */
     public static int getHttpPort(HttpServletRequest req) {
         try {
@@ -219,10 +191,6 @@ public class RequestUtils {
 
     /**
      * 获取浏览器提交的整形参数
-     *
-     * @param param
-     * @param defaultValue
-     * @return
      */
     public static int getParam(HttpServletRequest req, String param, int defaultValue) {
         return NumberUtils.toInt(req.getParameter(param), defaultValue);
@@ -230,10 +198,6 @@ public class RequestUtils {
 
     /**
      * 获取浏览器提交的整形参数
-     *
-     * @param param
-     * @param defaultValue
-     * @return
      */
     public static long getParam(HttpServletRequest req, String param, long defaultValue) {
         return NumberUtils.toLong(req.getParameter(param), defaultValue);

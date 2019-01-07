@@ -1,9 +1,6 @@
 package top.jgao.persistence.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.util.Assert;
-
-import javax.persistence.Transient;
 
 /**
  * 通用分页接受类
@@ -67,8 +64,7 @@ public class PageParams {
         this.pageSize = pageSize;
     }
 
-    @JsonIgnore
-    public boolean isNotEmpty() {
+    public boolean notEmpty() {
         return pageNum != null && pageSize != null;
     }
 
