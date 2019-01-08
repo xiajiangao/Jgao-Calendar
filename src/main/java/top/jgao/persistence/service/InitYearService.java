@@ -7,9 +7,9 @@ import top.jgao.enums.DateTagEnum;
 import top.jgao.enums.WeekEnum;
 import top.jgao.persistence.domain.SolarCalendar;
 import top.jgao.persistence.mapper.SolarCalendarMapper;
+import top.jgao.utils.TimeUtil;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,8 +23,7 @@ public class InitYearService {
 
     public void init(Integer year) throws ParseException {
         Assert.isTrue(year > 1970 && year < 2037, "年份超过限制");
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        Date parse = format.parse(year + "0101");
+        Date parse = TimeUtil.string2Date(year + "0101", TimeUtil.TIME_FORMAT_3_3);
         Calendar calendar = Calendar.getInstance();
         Calendar calendarNext = Calendar.getInstance();
         calendar.setTime(parse);
@@ -32,7 +31,7 @@ public class InitYearService {
         calendarNext.add(Calendar.YEAR, 1);
         //查询当年是否已经初始化
         SolarCalendar record = new SolarCalendar();
-        record.setDate(parse);
+        record.setDateInt(Integer.valueOf(year + "0101"));
         int count = solarCalendarMapper.selectCount(record);
         Assert.isTrue(count == 0, "当年已经初始化");
         List<SolarCalendar> list = new ArrayList<>();
@@ -51,7 +50,7 @@ public class InitYearService {
 
     private SolarCalendar getNewSolarCalendar(Calendar calendar, int wordDays) {
         SolarCalendar solarCalendar = new SolarCalendar();
-        solarCalendar.setDate(calendar.getTime());
+        solarCalendar.setDateInt(Integer.valueOf(TimeUtil.date2String(calendar.getTime(), TimeUtil.TIME_FORMAT_3_3)));
         int weekIndex = calendar.get(Calendar.DAY_OF_WEEK) - 1;
         solarCalendar.setWeek(WeekEnum.getEnglish(weekIndex));
         if (weekIndex == 6 || weekIndex == 7) {

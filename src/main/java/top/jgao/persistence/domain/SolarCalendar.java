@@ -2,13 +2,11 @@ package top.jgao.persistence.domain;
 
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
 public class SolarCalendar {
     private Integer id;
 
-    private Date date;
+    private Integer dateInt;
 
     private String week;
 

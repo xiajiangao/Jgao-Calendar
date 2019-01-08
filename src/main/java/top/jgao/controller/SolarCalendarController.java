@@ -3,11 +3,11 @@ package top.jgao.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.jgao.annotation.MyLogger;
 import top.jgao.basic.Result;
+import top.jgao.persistence.request.WorkingDaysRequest;
 import top.jgao.persistence.service.SolarCalendarService;
 
-import java.text.ParseException;
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -21,9 +21,10 @@ public class SolarCalendarController {
     @Autowired
     private SolarCalendarService solarCalendarService;
 
+    @MyLogger("查询节假日")
     @GetMapping("getWorkingDays")
-    public Result getWorkingDays(Date startDate, Date endDate) throws ParseException {
-        Map map = solarCalendarService.getWorkingDays(startDate, endDate);
+    public Result getWorkingDays(WorkingDaysRequest workingDaysRequest) {
+        Map map = solarCalendarService.getWorkingDays(workingDaysRequest);
         return Result.successResult(map);
     }
 }
