@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.jgao.persistence.mapper.SolarCalendarMapper">
-  <resultMap id="BaseResultMap" type="top.jgao.persistence.domain.SolarCalendar">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="date" jdbcType="TIMESTAMP" property="date" />
-    <result column="week" jdbcType="VARCHAR" property="week" />
-    <result column="date_tag" jdbcType="TINYINT" property="dateTag" />
-    <result column="working_days" jdbcType="SMALLINT" property="workingDays" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="top.jgao.persistence.domain.SolarCalendar">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="date" jdbcType="TIMESTAMP" property="date"/>
+        <result column="week" jdbcType="VARCHAR" property="week"/>
+        <result column="date_tag" jdbcType="TINYINT" property="dateTag"/>
+        <result column="working_days" jdbcType="SMALLINT" property="workingDays"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, date, week, date_tag, working_days
   </sql>
 
+    <select id="selectWorkingDays" parameterType="Date" resultType="Short">
+    SELECT
+	MAX( working_days ) - MIN( working_days ) working_days
+    FROM
+        `solar_calendar`
+    WHERE
+	`date` IN ( #{startDate}, #{endDate} )
+  </select>
 </mapper>
