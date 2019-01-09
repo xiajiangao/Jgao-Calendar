@@ -12,12 +12,10 @@
     id, date, week, date_tag, working_days
   </sql>
 
-    <select id="selectWorkingDays" parameterType="Integer" resultType="Short">
-    SELECT
-	MAX( working_days ) - MIN( working_days ) working_days
-    FROM
-        `solar_calendar`
-    WHERE
-	`date_int` IN ( #{startInt}, #{endInt} )
+    <select id="selectWorkingDays" parameterType="Integer" resultType="Integer">
+      SELECT working_days FROM `solar_calendar` WHERE date_int IN
+        <foreach item="item" collection="dateIntlist" open="(" separator="," close=")">
+            #{item}
+        </foreach>
   </select>
 </mapper>

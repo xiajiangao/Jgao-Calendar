@@ -8,8 +8,6 @@ import top.jgao.annotation.MyLogger;
 import top.jgao.basic.Result;
 import top.jgao.persistence.service.InitYearService;
 
-import java.text.ParseException;
-
 /**
  * @author JiangaoXia
  * @date 2019/1/7 14:08
@@ -22,7 +20,7 @@ public class JobController {
 
     @MyLogger("初始化年数据")
     @PostMapping("/initYear")
-    public Result initYear(@RequestParam("year") Integer year) throws ParseException {
+    public Result initYear(@RequestParam("year") Integer year) {
         initYearService.init(year);
         return Result.successResult();
     }

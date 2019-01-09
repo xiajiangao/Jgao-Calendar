@@ -9,7 +9,6 @@ import top.jgao.persistence.domain.SolarCalendar;
 import top.jgao.persistence.mapper.SolarCalendarMapper;
 import top.jgao.utils.TimeUtil;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +20,7 @@ public class InitYearService {
     @Autowired
     private SolarCalendarMapper solarCalendarMapper;
 
-    public void init(Integer year) throws ParseException {
+    public void init(Integer year) {
         Assert.isTrue(year > 1970 && year < 2037, "年份超过限制");
         Date parse = TimeUtil.string2Date(year + "0101", TimeUtil.TIME_FORMAT_3_3);
         Calendar calendar = Calendar.getInstance();
@@ -37,7 +36,7 @@ public class InitYearService {
         List<SolarCalendar> list = new ArrayList<>();
         int wordDays = 0;
         while (calendar.compareTo(calendarNext) < 0) {
-            SolarCalendar solarCalendar = getNewSolarCalendar(calendar, wordDays);
+            SolarCalendar solarCalendar = getNewSolarCalendar(calendar);
             if (DateTagEnum.WORKING_DAY.getValue() == solarCalendar.getDateTag()) {
                 wordDays++;
             }
@@ -48,7 +47,7 @@ public class InitYearService {
         solarCalendarMapper.insertList(list);
     }
 
-    private SolarCalendar getNewSolarCalendar(Calendar calendar, int wordDays) {
+    private SolarCalendar getNewSolarCalendar(Calendar calendar) {
         SolarCalendar solarCalendar = new SolarCalendar();
         solarCalendar.setDateInt(Integer.valueOf(TimeUtil.date2String(calendar.getTime(), TimeUtil.TIME_FORMAT_3_3)));
         int weekIndex = calendar.get(Calendar.DAY_OF_WEEK) - 1;
