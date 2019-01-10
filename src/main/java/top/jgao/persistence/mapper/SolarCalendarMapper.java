@@ -8,4 +8,10 @@ import java.util.List;
 
 public interface SolarCalendarMapper extends MyMapper<SolarCalendar> {
     List<Integer> selectWorkingDays(@Param("dateIntlist") List<Integer> dateIntlist);
+
+    Integer selectExpectedWorkingDay(@Param("dateInt") Integer dateInt,
+                                     @Param("lastDay") Integer lastDay,
+                                     @Param("workingDays") Integer workingDays);
+
+    Integer selectByDateInt(@Param("dateInt") Integer dateInt);
 }
