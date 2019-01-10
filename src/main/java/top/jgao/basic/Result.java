@@ -1,13 +1,15 @@
 package top.jgao.basic;
 
-@SuppressWarnings("all")
-public class Result {
+import java.io.Serializable;
+
+public class Result<T> implements Serializable {
+    private static final long serialVersionUID = -5809782578272943999L;
 
     private String requestId;
     private String resultCode;
     private String resultDesc;
     private Long resultServerTime;
-    private Object resultData;
+    private T resultData;
 
     public static Result successResult() {
         return result(ResultCode.RESULT_SUCCESS);
@@ -73,11 +75,11 @@ public class Result {
         this.resultServerTime = resultServerTime;
     }
 
-    public Object getResultData() {
+    public T getResultData() {
         return resultData;
     }
 
-    public void setResultData(Object resultData) {
+    public void setResultData(T resultData) {
         this.resultData = resultData;
     }
 }
