@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JgaoCalendarApplication {
 
     public static void main(String[] args) {
+        //test
         SpringApplication.run(JgaoCalendarApplication.class, args);
     }
 }
